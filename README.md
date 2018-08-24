@@ -22,7 +22,7 @@ You have volunteered to be the coordinator for your town’s youth soccer league
 - [ ] Print each letter to the console
     - [ ] The word “Optional” must not be present in the letter content
 
-<table id="practice-times">
+<table>
     <thead>
         <tr>
             <th colspan="6">Team Practices</th>
