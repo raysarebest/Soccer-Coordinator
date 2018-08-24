@@ -45,7 +45,7 @@ You have volunteered to be the coordinator for your town’s youth soccer league
             <td>March 17</td>
             <td>1 PM</td>
             <td>March 17</td>
-            <td>13 PM</td>
+            <td>3 PM</td>
             <td>March 18</td>
             <td>1 PM</td>
         </tr>
