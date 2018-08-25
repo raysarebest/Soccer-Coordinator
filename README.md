@@ -8,7 +8,7 @@ You have volunteered to be the coordinator for your town’s youth soccer league
 ***NOTE:*** You can *only* use tools and constructs covered in [Swift Basics](https://teamtreehouse.com/library/swift-basics-2), [Swift Collections and Control Flow](https://teamtreehouse.com/library/swift-collections-and-control-flow), and [Functions in Swift](https://teamtreehouse.com/library/functions-in-swift)
 
 #### Part 1: Create required collections
-- [ ] Create a single collection named `players` that contains all information for all 18 players
+- [x] Create a single collection named `players` that contains all information for all 18 players
 - [ ] Represent each player with a `Dictionary` with `String` keys and the corresponding values
 - [ ] Store players for each team in collections named `teamSharks`, `teamDragons`, and `teamRaptors`
 
@@ -39,6 +39,7 @@ You have volunteered to be the coordinator for your town’s youth soccer league
             <th>Time</th>
             <th>Date</th>
             <th>Time</th>
+        </tr>
     </thead>
     <tbody>
         <tr>
