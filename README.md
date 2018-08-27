@@ -9,8 +9,8 @@ You have volunteered to be the coordinator for your town’s youth soccer league
 
 #### Part 1: Create required collections
 - [x] Create a single collection named `players` that contains all information for all 18 players
-- [ ] Represent each player with a `Dictionary` with `String` keys and the corresponding values
-- [ ] Store players for each team in collections named `teamSharks`, `teamDragons`, and `teamRaptors`
+- [x] Represent each player with a `Dictionary` with `String` keys and the corresponding values
+- [x] Store players for each team in collections named `teamSharks`, `teamDragons`, and `teamRaptors`
 
 #### Part 2: Create satisfactory logic
 - [ ] Create logic that sorts players into 3 even teams, based on player experience
