@@ -25,29 +25,26 @@ You have volunteered to be the coordinator for your town’s youth soccer league
 <table>
     <thead>
         <tr>
-            <th colspan="6">Team Practices</th>
+            <th colspan="4">Team Practices</th>
         </tr>
         <tr>
-            <th colspan="2">Dragons</th>
-            <th colspan="2">Sharks</th>
-            <th colspan="2">Raptors</th>
-        </tr>
-        <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Date</th>
-            <th>Time</th>
+            <th></th>
+            <th>Dragons</th>
+            <th>Sharks</th>
+            <th>Raptors</th>
         </tr>
     </thead>
     <tbody>
         <tr>
+            <th>Date</th>
             <td>March 17</td>
-            <td>1 PM</td>
             <td>March 17</td>
-            <td>3 PM</td>
             <td>March 18</td>
+        </tr>
+        <tr>
+            <th>Time</th>
+            <td>1 PM</td>
+            <td>3 PM</td>
             <td>1 PM</td>
         </tr>
     </tbody>
