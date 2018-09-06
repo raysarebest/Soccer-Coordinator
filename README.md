@@ -13,8 +13,8 @@ You have volunteered to be the coordinator for your town’s youth soccer league
 - [x] Store players for each team in collections named `teamSharks`, `teamDragons`, and `teamRaptors`
 
 #### Part 2: Create satisfactory logic
-- [ ] Create logic that sorts players into 3 even teams, based on player experience
-    - [ ] The algorithm must not be based on magic or hard coded numbers or indexes
+- [x] Create logic that sorts players into 3 even teams, based on player experience
+    - [x] The algorithm must not be based on magic or hard coded numbers or indexes
 
 #### Part 3: Personalized Letters
 - [ ] Store all 18 letters in the a collection called `letters`, including the player’s name, guardian names, team name, and date/time of their first team practice
@@ -56,7 +56,7 @@ You have volunteered to be the coordinator for your town’s youth soccer league
 
 ### Extra Credit
 
-- [ ] Logic must sort players into 3 even teams based on player experience *and* height
-    - [ ] All teams must have an average height within 1.5 inches of each other
-    - [ ] Must not depend on initial order of the collection of players
-- [ ] Print average height of each team to the console
+- [x] Logic must sort players into 3 even teams based on player experience *and* height
+    - [x] All teams must have an average height within 1.5 inches of each other
+    - [x] Must not depend on initial order of the collection of players
+- [x] Print average height of each team to the console
