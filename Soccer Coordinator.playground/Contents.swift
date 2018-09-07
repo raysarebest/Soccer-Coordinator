@@ -18,14 +18,14 @@
  - ✅ The algorithm must not be based on magic or hard coded numbers or indexes
 
  #### Part 3: Personalized Letters
- - ❌ Store all 18 letters in the a collection called `letters`, including the player’s name, guardian names, team name, and date/time of their first team practice
- - ❌ Format each letter
- - ❌ Print each letter to the console
- - ❌ The word `Optional` must not be present in the letter content
+ - ✅ Store all 18 letters in the a collection called `letters`, including the player’s name, guardian names, team name, and date/time of their first team practice
+ - ✅ Format each letter
+ - ✅ Print each letter to the console
+ - ✅ The word `Optional` must not be present in the letter content
 
  #### Part 4: Naming and Comments
- - ❌ Include comments
- - ❌ Ensure specified naming requirements for constants, variables, keys, and methods are met
+ - ✅ Include comments
+ - ✅ Ensure specified naming requirements for constants, variables, keys, and methods are met
 
  ### Extra Credit
 
@@ -265,9 +265,48 @@ for team in teams{
     }
     print("- \(name): \(totalHeight(of: members) / Double(members.count)) inches")
 }
-print("\n---\n")
 
 /*:
  ---
  ## Letters
+
+ Now that we have everybody properly sorted, all we have left to do is generate and print out the letters to the parents, which is a pretty simple task. It's likely not really necessary without the requirement, but it's in the spec that we have to store all the letters in a collection called `letters`, so we're gonna start out by making an `Array` of `String`s for that
 */
+
+var letters = [String]()
+
+//: All in all, this is really short and sweet. Normally I'd put everything directly in this loop, but since we have to store each letter in the `letters` array, we're just gonna loop over all the teams, and for each player on each team, we're gonna generate a letter to their parents about what team they got placed on and when they meet for their first practice, and add that letter to the `letters` array
+
+for team in teams{
+    guard let teamName = team[teamNameKey] as? String, let practice = team[teamPracticeKey] as? [String: String], let date = practice[teamPracticeDateKey], let time = practice[teamPracticeTimeKey], let members = team[teamPlayersKey] as? [[String: Any]] else{
+        preconditionFailure("Incomplete data for team: \(team)") // Normally crashing is bad, but this is still just a playground and not production code, and any of these unwraps/casts failing is indicative of a data structural problem that I'd need to fix myself, so I think it's the right thing to do here
+    }
+    for player in members{
+        guard let playerName = player[playerNameKey] as? String, let parentName = player[playerParentKey] as? String else{
+            preconditionFailure("Incomplete data for player: \(player)") // I justify this crash for the same reason I did the one above
+        }
+        letters.append("""
+Dear \(parentName),
+
+    We are pleased to inform you that your child, \(playerName) has been placed on the \(teamName) for the upcoming 2018 soccer season! This will be an exciting year, and your child will be a very valuable member of their team.
+
+    The \(teamName)' first practice will be on \(date) at \(time) as Memorial Field in Drake's Creek Park, and it's mandatory that you and your child must attend. Your child will get to know their new teammates and the basics of how to stretch properly and perform a few practice drills, all while you meet your fellow team parents, learn about the upcoming schedule, and how you can best care for and support your child during the upcoming season. Please bring all the necessary release forms that have been sent with this letter. Your child will be provided with a uniform, but we ask that you please bring them equipped with cleats that fit well and shin guards.
+
+    We hope you and your child are just as excited as we are for the new season! We look forward to seeing you at the first practice.
+
+All the best,
+
+Michael Hulet
+
+Youth Soccer Coordinator, Hendersonville Department of Parks and Recreation
+
+""")
+    }
+}
+
+//: Now that we have all our letters typed up, we just need to print them all to the console, with a little formatting to make them easier to read
+
+for letter in letters{
+    print("\n\n--------------------------------------------------------------------------------\n\n")
+    print(letter)
+}

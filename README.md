@@ -17,10 +17,10 @@ You have volunteered to be the coordinator for your town’s youth soccer league
     - [x] The algorithm must not be based on magic or hard coded numbers or indexes
 
 #### Part 3: Personalized Letters
-- [ ] Store all 18 letters in the a collection called `letters`, including the player’s name, guardian names, team name, and date/time of their first team practice
-- [ ] Format each letter
-- [ ] Print each letter to the console
-    - [ ] The word “Optional” must not be present in the letter content
+- [x] Store all 18 letters in the a collection called `letters`, including the player’s name, guardian names, team name, and date/time of their first team practice
+- [x] Format each letter
+- [x] Print each letter to the console
+    - [x] The word “Optional” must not be present in the letter content
 
 <table>
     <thead>
@@ -51,8 +51,8 @@ You have volunteered to be the coordinator for your town’s youth soccer league
 </table>
 
 #### Part 4: Naming and Comments
-- [ ] Include comments
-- [ ] Ensure specified naming requirements for constants, variables, keys, and methods are met
+- [x] Include comments
+- [x] Ensure specified naming requirements for constants, variables, keys, and methods are met
 
 ### Extra Credit
 
