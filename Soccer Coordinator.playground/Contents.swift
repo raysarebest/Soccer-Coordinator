@@ -251,7 +251,7 @@ func chooseShortestIndex(from indexes: [Int]) -> Int{
  - precondition: There must be at least 1 player list in `playerGroups` which contains fewer than the maximum total number of players allowed
 */
 func chooseShortestIndex(from range: Range<Int> = 0..<playerGroups.count) -> Int{
-    return chooseShortestIndex(from: Array(range))
+    return chooseShortestIndex(from: Array(range.lowerBound..<range.upperBound))
 }
 
 //: Now that we have all the functions we need and have defined all the constants and variables we'll need, we can get down to actually sorting all the players into their teams. We're gonna do this by splitting all the players into one of 2 categories: either experienced or inexperienced
