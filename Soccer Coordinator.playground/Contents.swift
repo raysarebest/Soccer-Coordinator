@@ -2,7 +2,7 @@
  # Soccer Coordinator
  ## *Treehouse iOS Techdegree Project 1*
 
- You have volunteered to be the coordinator for your town’s youth soccer league. As part of your job you need to divide the 18 children who have signed up for the league into three even teams — Dragons, Sharks, and Raptors. In years past, the teams have been unevenly matched, so this year you are doing your best to fix that. For each child, you will have the following information: Name, height (in inches), whether or not they have played soccer before, and their guardians’ names. All code will be written and executed in a Swift Playground
+ You have volunteered to be the coordinator for your town’s youth soccer league. As part of your job you need to divide the 18 children who have signed up for the league into three even teams: Dragons, Sharks, and Raptors. In years past, the teams have been unevenly matched, so this year you are doing your best to fix that. For each child, you will have the following information: name, height (in inches), whether or not they have played soccer before, and their guardians’ names. All code will be written and executed in this Swift Playground
 
  ## Requirements
 
@@ -37,42 +37,85 @@
  ---
  ## Initial Definitions
 
- These exist just to make it easier and safer to directly copy/paste from the spreadsheet
-*/
-
-// If I could make this an Objective-C-style macro, I totally would, but I wouldn't have to in Objective-C 😛
-let YES = true
-let NO = false
-
-/*:
- This holds a list of all the players in the league. A player has a:
+ A player has a:
 
  - name
  - height
  - parent
  - either some or no prior experience
 */
+
+// I wish I could at least do this with an `enum` with `String` `rawValue`s
+let playerNameKey = "name"
+let playerHeightKey = "height"
+let playerParentKey = "parent"
+let playerExperienceKey = "experience?"
+
+//: These exist just to make it easier and safer to directly copy/paste from the spreadsheet
+
+// If I could make this an Objective-C-style macro, I totally would, but I wouldn't have to in Objective-C 😛
+let YES = true
+let NO = false
+
+/*:
+ This holds a list of all the players in the league. A player is a `[String: Any]` with values for all of the following key constants, which map to the following types:
+
+ - `playerNameKey -> String`
+ - `playerHeightKey -> Double` | ***NOTE:*** This could be an `Int` here, but making it a `Double` will allow for more informed sorting later on
+ - `playerParentKey -> String`
+ - `playerExperienceKey -> Bool`
+*/
 // I wanna do this with a `struct` or at least a `typealias`, but I gotta say, I love a lot of the culture references with these names
-var players: [(name: String, height: Double, hasExperience: Bool, parent: String)] = [
-    (name: "Joe Smith", height: 42, hasExperience: YES, parent: "Jim and Jan Smith"),
-    (name: "Jill Tanner", height: 36, hasExperience: YES, parent: "Clara Tanner"),
-    (name: "Bill Bon", height: 43, hasExperience: YES, parent: "Sara and Jenny Bon"),
-    (name: "Eva Gordon", height: 45, hasExperience: NO, parent: "Wendy and Mike Gordon"),
-    (name: "Matt Gill", height: 40, hasExperience: NO, parent: "Charles and Sylvia Gill"),
-    (name: "Kimmy Stein", height: 41, hasExperience: NO, parent: "Bill and Hillary Stein"),
-    (name: "Sammy Adams", height: 45, hasExperience: NO, parent: "Jeff Adams"),
-    (name: "Karl Saygan", height: 42, hasExperience: YES, parent: "Heather Bledsoe"),
-    (name: "Suzane Greenberg", height: 44, hasExperience: YES, parent: "Henrietta Dumas"),
-    (name: "Sal Dali", height: 41, hasExperience: NO, parent: "Gala Dali"),
-    (name: "Joe Kavalier", height: 39, hasExperience: NO, parent: "Sam and Elaine Kavalier"),
-    (name: "Ben Finkelstein", height: 44, hasExperience: NO, parent: "Aaron and Jill Finkelstein"),
-    (name: "Diego Soto", height: 41, hasExperience: YES, parent: "Robin and Sarika Soto"),
-    (name: "Chloe Alaska", height: 47, hasExperience: NO, parent: "David and Jamie Alaska"),
-    (name: "Arnold Willis", height: 43, hasExperience: NO, parent: "Claire Willis"),
-    (name: "Phillip Helm", height: 44, hasExperience: YES, parent: "Thomas Helm and Eva Jones"),
-    (name: "Les Clay", height: 42, hasExperience: YES, parent: "Wynonna Brown"),
-    (name: "Herschel Krustofski", height: 45, hasExperience: YES, parent: "Hyman and Rachel Krustofski")
+var players: [[String: Any]] = [
+    [playerNameKey: "Joe Smith", playerHeightKey: 42.0, playerExperienceKey: YES, playerParentKey: "Jim and Jan Smith"],
+    [playerNameKey: "Jill Tanner", playerHeightKey: 36.0, playerExperienceKey: YES, playerParentKey: "Clara Tanner"],
+    [playerNameKey: "Bill Bon", playerHeightKey: 43.0, playerExperienceKey: YES, playerParentKey: "Sara and Jenny Bon"],
+    [playerNameKey: "Eva Gordon", playerHeightKey: 45.0, playerExperienceKey: NO, playerParentKey: "Wendy and Mike Gordon"],
+    [playerNameKey: "Matt Gill", playerHeightKey: 40.0, playerExperienceKey: NO, playerParentKey: "Charles and Sylvia Gill"],
+    [playerNameKey: "Kimmy Stein", playerHeightKey: 41.0, playerExperienceKey: NO, playerParentKey: "Bill and Hillary Stein"],
+    [playerNameKey: "Sammy Adams", playerHeightKey: 45.0, playerExperienceKey: NO, playerParentKey: "Jeff Adams"],
+    [playerNameKey: "Karl Saygan", playerHeightKey: 42.0, playerExperienceKey: YES, playerParentKey: "Heather Bledsoe"],
+    [playerNameKey: "Suzane Greenberg", playerHeightKey: 44.0, playerExperienceKey: YES, playerParentKey: "Henrietta Dumas"],
+    [playerNameKey: "Sal Dali", playerHeightKey: 41.0, playerExperienceKey: NO, playerParentKey: "Gala Dali"],
+    [playerNameKey: "Joe Kavalier", playerHeightKey: 39.0, playerExperienceKey: NO, playerParentKey: "Sam and Elaine Kavalier"],
+    [playerNameKey: "Ben Finkelstein", playerHeightKey: 44.0, playerExperienceKey: NO, playerParentKey: "Aaron and Jill Finkelstein"],
+    [playerNameKey: "Diego Soto", playerHeightKey: 41.0, playerExperienceKey: YES, playerParentKey: "Robin and Sarika Soto"],
+    [playerNameKey: "Chloe Alaska", playerHeightKey: 47.0, playerExperienceKey: NO, playerParentKey: "David and Jamie Alaska"],
+    [playerNameKey: "Arnold Willis", playerHeightKey: 43.0, playerExperienceKey: NO, playerParentKey: "Claire Willis"],
+    [playerNameKey: "Phillip Helm", playerHeightKey: 44.0, playerExperienceKey: YES, playerParentKey: "Thomas Helm and Eva Jones"],
+    [playerNameKey: "Les Clay", playerHeightKey: 42.0, playerExperienceKey: YES, playerParentKey: "Wynonna Brown"],
+    [playerNameKey: "Herschel Krustofski", playerHeightKey: 45.0, playerExperienceKey: YES, playerParentKey: "Hyman and Rachel Krustofski"]
 ]
+
+//: Since each player is represented by a `Dictionary`, we'll have to unwrap and cast the value for each key whenever we want any data, so considering how often we'll need to be unwrapping and typecasting, I'm going to make a few functions that `return` non-`Optional`s for each key I access more than once. These would work best as one generic, but I'm not allowed to use generics yet, so separate functions they shall be
+
+/**
+ Unwraps the height from a player `Dictionary`
+
+ - parameter player: The player whose height shall be accessed
+ - returns: The `player`'s height
+ - precondition: The `player` must have a `Double` defined for `playerHeightKey`
+ */
+func heightFor(player: [String: Any]) -> Double{
+    guard let height = player[playerHeightKey] as? Double else{
+        preconditionFailure("Couldn't find valid height for player: \(player)")
+    }
+    return height
+}
+
+/**
+ Unwraps the experience from a player `Dictionary`
+
+ - parameter player: The player whose experience shall be accessed
+ - returns: A `Bool` indicating if the `player` has previous soccer experience
+ - precondition: The `player` must have a `Bool` defined for `playerExperienceKey`
+ */
+func experienceFor(player: [String: Any]) -> Bool{
+    guard let experience = player[playerExperienceKey] as? Bool else{
+        preconditionFailure("Couldn't find valid experience record for player: \(player)")
+    }
+    return experience
+}
 
 /*:
  These will eventually be the definitive lists of who's on what teams, and their practice schedule. A team has a:
@@ -84,9 +127,9 @@ var players: [(name: String, height: Double, hasExperience: Bool, parent: String
     - time
 */
 // This would all be better as a `struct`, or at least a `typealias` so I'd only have to change 1 thing if I change the way I structure my data, which I've done like 5 times now. Also, this type signature is *really* long
-var teamSharks: (name: String, practice: (date: String, time: String), players: [(name: String, height: Double, hasExperience: Bool, parent: String)]) = (name: "Sharks", practice: (date: "March 17", time: "3 PM"), players: [(name: String, height: Double, hasExperience: Bool, parent: String)]())
-var teamDragons: (name: String, practice: (date: String, time: String), players: [(name: String, height: Double, hasExperience: Bool, parent: String)]) = (name: "Dragons", practice: (date: "March 17", time: "1 PM"), players: [(name: String, height: Double, hasExperience: Bool, parent: String)]())
-var teamRaptors: (name: String, practice: (date: String, time: String), players: [(name: String, height: Double, hasExperience: Bool, parent: String)]) = (name: "Raptors", practice: (date: "March 18", time: "1 PM"), players: [(name: String, height: Double, hasExperience: Bool, parent: String)]())
+var teamSharks: (name: String, practice: (date: String, time: String), players: [[String: Any]]) = (name: "Sharks", practice: (date: "March 17", time: "3 PM"), players: [[String: Any]]())
+var teamDragons: (name: String, practice: (date: String, time: String), players: [[String: Any]]) = (name: "Dragons", practice: (date: "March 17", time: "1 PM"), players: [[String: Any]]())
+var teamRaptors: (name: String, practice: (date: String, time: String), players: [[String: Any]]) = (name: "Raptors", practice: (date: "March 18", time: "1 PM"), players: [[String: Any]]())
 
 /*:
  ---
@@ -103,7 +146,7 @@ var hasSwapped = false
 repeat{
     hasSwapped = false // Bubble sort knows it's done when it completes a full pass over the array without changing anything, so we need to start fresh after each pass
     for index in 1..<players.count{ // Starting at the beginning of the array,
-        if players[index - 1].height < players[index].height{ // If an element earlier in the array is smaller than the one that comes after it,
+        if heightFor(player: players[index - 1]) < heightFor(player: players[index]){ // If an element earlier in the array is smaller than the one that comes after it,
             (players[index - 1], players[index]) = (players[index], players[index - 1]) // Swap them
             hasSwapped = true // Also, we need to remember the fact that we swapped things on this pass
         }
@@ -131,10 +174,10 @@ players
  - returns: The sum of the height of all players in `team`
  - precondition: Each player within the `team` must have a non-optional `Double` defined for `playerHeightKey`
  */
-func totalHeight(of team: [(name: String, height: Double, hasExperience: Bool, parent: String)]) -> Double{
+func totalHeight(of team: [[String: Any]]) -> Double{
     var total: Double = 0 // If I didn't mark this as a `Double` by default, it'd be inferred as an `Int` and I'd lose the decimals
     for player in team{
-        total += player.height
+        total += heightFor(player: player)
     }
     return total
 }
@@ -148,19 +191,19 @@ func totalHeight(of team: [(name: String, height: Double, hasExperience: Bool, p
  - returns: An array of all players in `team` that have previous soccer experience
  - precondition: Each player in `team` must have a non-optional `Bool` defined for `playerExperienceKey`
  */
-func totalExperiencedPlayers(on team: [(name: String, height: Double, hasExperience: Bool, parent: String)]) -> Int{
-    var experienced = [(name: String, height: Double, hasExperience: Bool, parent: String)]()
+func totalExperiencedPlayers(on team: [[String: Any]]) -> Int{
+    var experienced = [[String: Any]]()
     for player in team{
-        if player.hasExperience{
+        if experienceFor(player: player){
             experienced.append(player)
         }
     }
     return experienced.count
 }
 
-//: So, now that we have most of the functions we'll need, let's get started on actually sorting the players. First, we're gonna need an `Array` that contains `Array`s of player tuples to represent each team's list of players. It goes without saying that since we've decided on having 3 teams in this exercise, we'll need 3 of these team `Array`s, though this can be easily changed for however many teams we want to have
+//: So, now that we have most of the functions we'll need, let's get started on actually sorting the players. First, we're gonna need an `Array` that contains `Array`s of player dictionaries to represent each team's list of players. It goes without saying that since we've decided on having 3 teams in this exercise, we'll need 3 of these team `Array`s, though this can be easily changed for however many teams we want to have
 
-var playerGroups = Array(repeating: [(name: String, height: Double, hasExperience: Bool, parent: String)](), count: 3)
+var playerGroups = Array(repeating: [[String: Any]](), count: 3)
 
 //: I'm about to do a bunch of the same casting twice here, and it's relatively complicated, so I'm gonna make a function to do it. It basically just divides 2 `Int`s accounting for decimals but rounding them back up to the next `Int`
 
@@ -177,7 +220,7 @@ func ceilingDivide(_ dividend: Int, divisor: Int) -> Int{
     return Int((Double(dividend) / Double(divisor)).rounded(.up))
 }
 
-//: We'll also need to hang onto how many players a team is allowed to have. In this case, since there are only 3 teams, each team will contain approximately ⅓ of all players in the league. If the number of players in the league isn't evenly divisible by the number of teams, though, some teams might have extras, so we need to know the minimum nuber of players that every team *must* have, and the maximum number of players that some teams *might* have. The difference between these 2 figures should always either be `0` or `1`. It'll be `0` when the players in the league can be evenly distributed into the number of teams in the league, and `1` when they can't and some team(s) will need extra(s). This is achieved by rounding up the `maximum` to the next integer if the players aren't evenly divisible by the teams, and using normal integer division for the `minimum`, which always rounds down
+//: We'll also need to hang onto how many players a team is allowed to have. In this case, since there are only 3 teams, each team will contain approximately ⅓ of all players in the league. If the number of players in the league isn't evenly divisible by the number of teams, though, some teams might have extras, so we need to know the minimum number of players that every team *must* have, and the maximum number of players that some teams *might* have. The difference between these 2 figures should always either be `0` or `1`. It'll be `0` when the `players` in the league can be evenly distributed into the number of teams in the league, and `1` when they can't and some team(s) will need extra(s). This is achieved by rounding up the `maximum` to the next integer if the players aren't evenly divisible by the teams, and using normal integer division for the `minimum`, which always rounds down
 
 let playerCap = (maximum: ceilingDivide(players.count, divisor: playerGroups.count), minimum: players.count / playerGroups.count)
 
@@ -188,7 +231,7 @@ let experienceCap = (maximum: ceilingDivide(totalExperiencedPlayers(on: players)
 /*:
  ### Player Partitioning
 
- The last function we'll need for this is one of the 2 greedy heuristic implementations we'll need to make, this one choosing the team the next player will be sorted into by the total height of all the teams. This function chooses the index of the player list in `playerGroups` that has the smallest total height. I'm going to make 2 overloads, where the base implementation takes an array of indexes to choose from, and another one that takes a range of indexes and passes them to the first implementation
+ The last function we'll need for this is one of the 2 greedy heuristic implementations we'll need to make, this one choosing the team the next player will be sorted into by the total height of all the teams. This function chooses the index of the player list in `playerGroups` that has the smallest total height. I'm going to make 2 overloads, where the base implementation takes an array of indexes to choose from, and another one that takes a `Range` of indexes and passes them to the first implementation
 */
 
 /**
@@ -219,7 +262,7 @@ func chooseShortestIndex(from indexes: [Int]) -> Int{
     if belowMinimums.count == 1{
         return belowMinimums[0]
     }
-//: The last thing we need to do before we actually determine the index we'll be `return`ing is figure out for sure what our choices are. If there are some teams which have fewer than the minimum number of players, our choice is easy - we just choose from those. Otherwise, we need to figure out which teams have fewer players than the maximum allowed and only choose from those
+//: The last thing we need to do before we actually determine the index we'll be `return`ing is figure out for sure what our choices are. If there are some teams which have fewer than the minimum number of players, our choice is easy—we just choose from those. Otherwise, we need to figure out which teams have fewer players than the maximum allowed and only choose from those
     var searchIndexes: [Int]
     if belowMinimums.isEmpty{
         var eligibles = [Int]()
@@ -254,13 +297,13 @@ func chooseShortestIndex(from range: Range<Int> = 0..<playerGroups.count) -> Int
     return chooseShortestIndex(from: Array(range.lowerBound..<range.upperBound)) // Interesting quirk of Swift 4.1 and earlier: The `Array` initializer can't take a range in a constant/variable, but it *can* take a range literal
 }
 
-//: Now that we have all the functions we need and have defined all the constants and variables we'll need, we can get down to actually sorting all the players into their teams. We're gonna do this by splitting all the players into one of 2 categories: either experienced or inexperienced
+//: Now that we have all the functions we need and have defined all the constants and variables we'll need, we can get down to actually sorting all the players into their teams. We're gonna do this by splitting all the players into one of 2 categories: either `experienced` or `inexperienced`
 
-var experienced = [(name: String, height: Double, hasExperience: Bool, parent: String)]()
-var inexperienced = experienced // This just creates another empty array of the same type as `experienced`. Usually I like specifying the type for clarity, but I don't really feel like typing out that long type signature again
+var experienced = [[String: Any]]()
+var inexperienced = [[String: Any]]()
 
 for player in players{
-    if player.hasExperience{
+    if experienceFor(player: player){
         experienced.append(player)
     }
     else{
@@ -299,8 +342,8 @@ for player in experienced{
     }
 //: The major difference between this implementation of the greedy heuristic and the one above is that we're going to account for ties here. If there's more than 1 team that currently have a count of experienced players that are equal to each other but fewer than all the other teams, we'll defer to the height-based heuristic to decide between them. We're going to assume that the first choice we have is the lowest, and then check all the rest. If we find a team which has fewer experiened players, we'll replace the `inexperiencedIndexes` array to only contain that team. If we find a team that has the same number of inexperienced players, we'll add it to the `inexperiencedIndexes` alongside whatever team(s) are already there
     var inexperiencedIndexes = [searchIndexes[0]]
-    var leastExperienceCount = totalExperiencedPlayers(on: playerGroups[inexperiencedIndexes[0]]) // I could check this in the loop, but since this function runs in linear time, we'll hang onto it once now so we don't turn this runtime too far into an exponential one
-    for index in searchIndexes[1...]{ // This is Swift 4 shorthand for "everything in `searchIndexes` after the first one
+    var leastExperienceCount = totalExperiencedPlayers(on: playerGroups[inexperiencedIndexes[0]]) // I could check this multiple times in the loop, but since this function runs in linear time, we'll hang onto it once now so we don't turn this runtime too far into an exponential one
+    for index in searchIndexes[1...]{ // This is Swift 4 shorthand for "everything in `searchIndexes` after the first one"
         let currentExperience = totalExperiencedPlayers(on: playerGroups[index]) // I'm hanging onto this here for basically the same reason as why I did for `leastExperienceCount`
         if currentExperience < leastExperienceCount{
             inexperiencedIndexes = [index]
@@ -358,10 +401,16 @@ var letters = [String]()
 
 for team in teams{
     for player in team.players{
+        guard let playerName = player[playerNameKey] as? String else{
+            preconditionFailure("Couldn't find name for player: \(player)")
+        }
+        guard let parentName = player[playerParentKey] as? String else{
+            preconditionFailure("Couldn't find parent for player: \(player)")
+        }
         letters.append("""
-Dear \(player.parent),
+Dear \(parentName),
 
-    We are pleased to inform you that your child, \(player.name) has been placed on the \(team.name) for the upcoming 2018 soccer season! This will be an exciting year, and your child will be a very valuable member of their team.
+    We are pleased to inform you that your child, \(playerName) has been placed on the \(team.name) for the upcoming 2018 soccer season! This will be an exciting year, and your child will be a very valuable member of their team.
 
     The \(team.name)' first practice will be on \(team.practice.date) at \(team.practice.time) at Memorial Field in Drake's Creek Park, and it's mandatory that you and your child must attend. The practice will last approximately 1.5 - 2 hours. Your child will get to know their new teammates and the basics of how to stretch properly and perform a few practice drills, all while you meet your fellow team parents, learn about the upcoming schedule, and how you can best care for and support your child during the upcoming season. Please bring all the necessary release forms that have been sent with this letter. Your child will be provided with a uniform, but we ask that you please bring them equipped with cleats that fit well and shin guards.
 
