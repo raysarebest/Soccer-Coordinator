@@ -65,7 +65,7 @@ let NO = false
  - `playerParentKey -> String`
  - `playerExperienceKey -> Bool`
 */
-// I wanna do this with a `struct` or at least a `typealias`, but I gotta say, I love a lot of the culture references with these names
+// I wanna do this with a `struct`, named tuples, or at least a `typealias`, but I gotta say, I love a lot of the culture references with these names
 var players: [[String: Any]] = [
     [playerNameKey: "Joe Smith", playerHeightKey: 42.0, playerExperienceKey: YES, playerParentKey: "Jim and Jan Smith"],
     [playerNameKey: "Jill Tanner", playerHeightKey: 36.0, playerExperienceKey: YES, playerParentKey: "Clara Tanner"],
